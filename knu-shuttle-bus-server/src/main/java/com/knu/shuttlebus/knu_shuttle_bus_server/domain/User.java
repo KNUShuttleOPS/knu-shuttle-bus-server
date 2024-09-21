@@ -19,21 +19,21 @@ public class User {
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "username")
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "password")
+    @Column(name = "user_password")
     private String password;
-    
+
     @Column(name = "device_id", nullable = false, unique = true)
     private String deviceId;
 
-    public void update(String userName, String password){
+    public void update(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
-    public void updateDeviceId(String deviceId){
+    public void updateDeviceId(String deviceId) {
         this.deviceId = deviceId;
     }
 }
