@@ -26,76 +26,73 @@ public class PassengerController {
     private final UserService userService;
 
     @PostMapping("/passengers")
-    public ResponseEntity<String> register(@RequestBody PassengerRegistration passengerRegistration){
+    public ResponseEntity<String> register(@RequestBody PassengerRegistration passengerRegistration) {
         try {
             userService.updateDeviceId(passengerRegistration.getStudentId(), passengerRegistration.getDeviceId());
             Passenger passenger = passengerService.register(passengerRegistration);
-            
+
             return ResponseEntity.status(HttpStatus.CREATED)
-                .body(String.format("[SUCCESS] Register Passenger %s", passenger.getStudentId()));
+                    .body(String.format("[SUCCESS] Register Passenger %s", passenger.getStudentId()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("[FAIL] Register Passenger : " + e.getMessage());
+                    .body("[FAIL] Register Passenger : " + e.getMessage());
         }
     }
 
     @PatchMapping("/passengers/{deviceId}/station")
     public ResponseEntity<String> updateStation(
-        @PathVariable String deviceId,
-        @RequestParam String station
-    ) {
+            @PathVariable String deviceId,
+            @RequestParam Integer station) {
         try {
             Passenger passenger = passengerService.updateStation(deviceId, station);
             return ResponseEntity.status(HttpStatus.OK)
-                .body(String.format("[SUCCESS] Update Passenger %s Station", passenger.getStudentId()));
+                    .body(String.format("[SUCCESS] Update Passenger %s Station", passenger.getStudentId()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("[FAIL] Update Passenger Station: " + e.getMessage());
+                    .body("[FAIL] Update Passenger Station: " + e.getMessage());
         }
     }
 
     @PatchMapping("/passengers/{deviceId}/alarm")
     public ResponseEntity<String> updateAlarm(
-        @PathVariable String deviceId,
-        @RequestParam boolean alarm
-    ) {
+            @PathVariable String deviceId,
+            @RequestParam boolean alarm) {
         try {
             Passenger passenger = passengerService.updateAlarm(deviceId, alarm);
             return ResponseEntity.status(HttpStatus.OK)
-                .body(String.format("[SUCCESS] Update Passenger %s Alarm %s", passenger.getStudentId(), passenger.getAlarm().toString()));
+                    .body(String.format("[SUCCESS] Update Passenger %s Alarm %s", passenger.getStudentId(),
+                            passenger.getAlarm().toString()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("[FAIL] Update Passenger Alarm: " + e.getMessage());
+                    .body("[FAIL] Update Passenger Alarm: " + e.getMessage());
         }
     }
 
     @PatchMapping("/passengers/{deviceId}/token")
     public ResponseEntity<String> updateToken(
-        @PathVariable String deviceId,
-        @RequestParam String fcmtoken
-    ) {
+            @PathVariable String deviceId,
+            @RequestParam String fcmtoken) {
         try {
             Passenger passenger = passengerService.updateFCMToken(deviceId, fcmtoken);
             return ResponseEntity.status(HttpStatus.OK)
-                .body(String.format("[SUCCESS] Update Passenger %s FCMToken", passenger.getStudentId()));
+                    .body(String.format("[SUCCESS] Update Passenger %s FCMToken", passenger.getStudentId()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("[FAIL] Update Passenger FCMToken: " + e.getMessage());
+                    .body("[FAIL] Update Passenger FCMToken: " + e.getMessage());
         }
     }
 
     @GetMapping("/passengers/station")
     public ResponseEntity<Object> getPassengersByStationAndAlarm(
-        @RequestParam Integer station
-    ) {
+            @RequestParam Integer station) {
         try {
             List<Passenger> passengers = passengerService.findPassengerByStationAndAlarm(station);
-            
+
             return ResponseEntity.status(HttpStatus.OK)
-                .body(passengers);
+                    .body(passengers);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("[FAIL] All Bus : " + e.getMessage());
+                    .body("[FAIL] All Bus : " + e.getMessage());
         }
     }
 }

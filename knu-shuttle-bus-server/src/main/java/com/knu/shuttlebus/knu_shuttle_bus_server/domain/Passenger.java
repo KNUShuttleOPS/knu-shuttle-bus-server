@@ -23,9 +23,9 @@ public class Passenger {
 
     @Column(name = "student_id", nullable = false, unique = true)
     private String studentId;
-    
+
     @Column(name = "station")
-    private String station;
+    private Integer station;
 
     @Column(name = "alarm")
     @ColumnDefault("false")
@@ -38,15 +38,15 @@ public class Passenger {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
     private User user;
 
-    public void updateStation(String station){
+    public void updateStation(Integer station) {
         this.station = station;
     }
-    
-    public void updateAlarm(boolean alarm){
+
+    public void updateAlarm(boolean alarm) {
         this.alarm = alarm;
     }
 
-    public void updateFCMToken(String fcmToken){
+    public void updateFCMToken(String fcmToken) {
         this.fcmToken = fcmToken;
     }
 }
