@@ -1,26 +1,29 @@
 CREATE TABLE user (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(20),
+    user_password VARCHAR(60),
     device_id VARCHAR(100) NOT NULL UNIQUE
 );
 
 CREATE TABLE bus (
     bus_id INT AUTO_INCREMENT PRIMARY KEY,
-    device_id VARCHAR(100) NOT NULL UNIQUE, 
-    heading VARCHAR(255),
-    latitude DECIMAL(10,7),
-    longitude DECIMAL(11,7),
+    user_id INT,
     line VARCHAR(10) NOT NULL,
-    operation_info BOOLEAN, 
-    FOREIGN KEY (device_id) REFERENCES user(device_id),
-    INDEX (line, heading)
+    round INT NOT NULL,
+    heading VARCHAR(255),
+    operation_info BOOLEAN,
+    CONSTRAINT fk_bus_user FOREIGN KEY (user_id) REFERENCES user(user_id),
+    INDEX (line)
 );
 
 CREATE TABLE passenger (
     passenger_id INT AUTO_INCREMENT PRIMARY KEY,
-    device_id VARCHAR(100) NOT NULL UNIQUE,
+    user_id INT,
     student_id VARCHAR(10) NOT NULL UNIQUE,
-    station VARCHAR(10),
+    station INT,
+    alarm BOOLEAN,
     fcmtoken VARCHAR(255) NOT NULL,
-    FOREIGN KEY (device_id) REFERENCES user(device_id),
-    INDEX (student_id, station)
+    CONSTRAINT fk_passenger_user FOREIGN KEY (user_id) REFERENCES user(user_id),
+    INDEX (station),
+    INDEX (student_id)
 );
