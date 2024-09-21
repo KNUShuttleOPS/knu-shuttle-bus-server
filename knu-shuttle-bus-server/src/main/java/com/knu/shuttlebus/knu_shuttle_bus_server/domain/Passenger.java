@@ -35,7 +35,7 @@ public class Passenger {
     private String fcmToken;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     public void updateStation(Integer station) {

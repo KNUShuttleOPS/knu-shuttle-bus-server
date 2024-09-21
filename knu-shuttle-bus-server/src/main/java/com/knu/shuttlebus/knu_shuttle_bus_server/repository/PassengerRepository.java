@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.knu.shuttlebus.knu_shuttle_bus_server.domain.Passenger;
 
-
 @Repository
-public interface PassengerRepository extends JpaRepository<Passenger, Integer>{
-    Optional<Passenger> findByUserId(Integer userId);
+public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
+    Optional<Passenger> findByUserUserId(Integer userId);
+
     Optional<Passenger> findByStudentId(String studentId);
-    
+
     @Query(value = "SELECT * FROM passenger WHERE alarm = true AND station = :station", nativeQuery = true)
     List<Passenger> findByStationAndAlarm(Integer station);
 }

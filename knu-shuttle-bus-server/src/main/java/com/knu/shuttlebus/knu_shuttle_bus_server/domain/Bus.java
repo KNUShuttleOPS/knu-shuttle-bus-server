@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
 @Table(name = "bus")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,21 +27,21 @@ public class Bus {
 
     @Column(name = "heading")
     private Integer heading;
-    
+
     @Column(name = "operation_info")
     private Boolean operationInfo;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public void updateInfo(String line, Integer round, Boolean operationInfo){
+    public void updateInfo(String line, Integer round, Boolean operationInfo) {
         this.line = line;
         this.round = round;
         this.operationInfo = operationInfo;
     }
 
-    public void updateHeading(Integer heading){
+    public void updateHeading(Integer heading) {
         this.heading = heading;
     }
 }

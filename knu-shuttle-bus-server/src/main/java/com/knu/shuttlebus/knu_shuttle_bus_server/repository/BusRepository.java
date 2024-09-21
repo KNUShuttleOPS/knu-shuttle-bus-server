@@ -10,15 +10,15 @@ import org.springframework.stereotype.Repository;
 import com.knu.shuttlebus.knu_shuttle_bus_server.domain.Bus;
 
 @Repository
-public interface BusRepository extends JpaRepository<Bus, Integer>{
-    Optional<Bus> findByUserId(Integer userId);
-    
+public interface BusRepository extends JpaRepository<Bus, Integer> {
+    Optional<Bus> findByUserUserId(Integer userId);
+
     @Query(value = "SELECT * FROM bus WHERE line = :line And operation_info = true", nativeQuery = true)
     List<Bus> findByLine(String line);
-    
-    @Query(value = "SELECT * FROM bus WHERE heading <= :stop And operation_info = true", nativeQuery = true)
-    List<Bus> findArrivingAtStop(Integer stop);
-    
+
+    @Query(value = "SELECT * FROM bus WHERE heading <= :stop And line = :line And operation_info = true", nativeQuery = true)
+    List<Bus> findArrivingAtStop(String line, Integer stop);
+
     @Query(value = "SELECT * FROM bus WHERE operation_info = true", nativeQuery = true)
     List<Bus> findByOperationInfo();
 }

@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### My SQL ###
+/mysql/db
+
+### Firebase ###
+/src/main/resources/firebase

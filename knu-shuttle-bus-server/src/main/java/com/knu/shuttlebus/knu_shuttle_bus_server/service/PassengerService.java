@@ -23,7 +23,7 @@ public class PassengerService {
     public Passenger register(PassengerRegistration dto) {
         User targetUser = userRepository.findByDeviceId(dto.getDeviceId())
                 .orElseThrow(() -> new IllegalArgumentException("Unknown User"));
-        if (passengerRepository.findByUserId(targetUser.getUserId()).isPresent()) {
+        if (passengerRepository.findByUserUserId(targetUser.getUserId()).isPresent()) {
             throw new IllegalArgumentException("Passenger Already Exists");
         }
 
@@ -62,7 +62,7 @@ public class PassengerService {
     public Passenger findPassengerByDeviceId(String deviceId) {
         User targetUser = userRepository.findByDeviceId(deviceId)
                 .orElseThrow(() -> new IllegalArgumentException("Unknown User"));
-        return passengerRepository.findByUserId(targetUser.getUserId())
+        return passengerRepository.findByUserUserId(targetUser.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Unknown Passenger"));
     }
 }

@@ -8,6 +8,7 @@ class KnuShuttleBusSystemServerApplicationTests {
 
 	@Test
 	void contextLoads() {
+	
 	}
 
 }
