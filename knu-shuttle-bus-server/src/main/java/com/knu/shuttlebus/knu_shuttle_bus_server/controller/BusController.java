@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.knu.shuttlebus.knu_shuttle_bus_server.domain.Bus;
-import com.knu.shuttlebus.knu_shuttle_bus_server.dto.BusArrivingAtStopRequest;
 import com.knu.shuttlebus.knu_shuttle_bus_server.dto.BusRegistration;
 import com.knu.shuttlebus.knu_shuttle_bus_server.dto.BusUpdateRequest;
 import com.knu.shuttlebus.knu_shuttle_bus_server.service.BusService;
@@ -46,7 +45,7 @@ public class BusController {
     @Operation(summary = "버스 정보 업데이트", description = "특정 디바이스 ID의 버스 정보(호선, 회차)를 업데이트합니다.")
     @PatchMapping("/buses/{deviceId}")
     public ResponseEntity<String> update(
-            @Parameter(description = "디바이스 ID", required = true) @PathVariable String deviceId,
+            @Parameter(description = "디바이스 ID", required = true) @PathVariable(name = "deviceId") String deviceId,
             @RequestBody BusUpdateRequest busUpdateRequest) {
         try {
             Bus bus = busService.update(deviceId, busUpdateRequest);
@@ -61,8 +60,8 @@ public class BusController {
     @Operation(summary = "다음 정류장 업데이트", description = "특정 버스의 다음 정류장(행선지)을 업데이트합니다.")
     @PatchMapping("/buses/{deviceId}/heading")
     public ResponseEntity<String> updateHeading(
-            @Parameter(description = "디바이스 ID", required = true) @PathVariable String deviceId,
-            @Parameter(description = "다음 정류장", required = true) @RequestParam Integer heading) {
+            @Parameter(description = "디바이스 ID", required = true) @PathVariable(name = "deviceId") String deviceId,
+            @Parameter(description = "다음 정류장", required = true) @RequestParam(name = "station") Integer heading) {
         try {
             Bus bus = busService.updateBusHeading(deviceId, heading);
             return ResponseEntity.status(HttpStatus.OK)
@@ -90,7 +89,7 @@ public class BusController {
     @Operation(summary = "특정 노선의 버스 조회", description = "특정 노선의 모든 버스를 조회합니다.")
     @GetMapping("/buses/line")
     public ResponseEntity<Object> getbusesByLine(
-            @Parameter(description = "노선 이름", required = true) @RequestParam String line) {
+            @Parameter(description = "노선 이름", required = true) @RequestParam(name = "line") String line) {
         try {
             List<Bus> buses = busService.findBusListByLine(line);
             return ResponseEntity.status(HttpStatus.OK)
@@ -104,9 +103,10 @@ public class BusController {
     @Operation(summary = "특정 정류장에 도착 예정인 버스 조회", description = "특정 정류장에 도착 예정인 버스를 조회합니다.")
     @GetMapping("/buses/arrival")
     public ResponseEntity<Object> getBusesArrivingAtStop(
-            @RequestBody BusArrivingAtStopRequest busArrivingAtStopRequest) {
+            @RequestParam(name = "line") String line,
+            @RequestParam(name = "station") Integer station) {
         try {
-            List<Bus> buses = busService.findBusesArrivingAtStop(busArrivingAtStopRequest);
+            List<Bus> buses = busService.findBusesArrivingAtStop(line, station);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(buses);
         } catch (Exception e) {

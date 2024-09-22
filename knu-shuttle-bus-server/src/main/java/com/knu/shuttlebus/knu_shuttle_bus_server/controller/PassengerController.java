@@ -48,8 +48,8 @@ public class PassengerController {
     @Operation(summary = "승객의 정류장 업데이트", description = "특정 승객의 정류장 정보를 업데이트합니다.")
     @PatchMapping("/passengers/{deviceId}/station")
     public ResponseEntity<String> updateStation(
-            @Parameter(description = "승객의 디바이스 ID", required = true) @PathVariable String deviceId,
-            @Parameter(description = "업데이트할 정류장 번호", required = true) @RequestParam Integer station) {
+            @Parameter(description = "승객의 디바이스 ID", required = true) @PathVariable(name = "deviceId") String deviceId,
+            @Parameter(description = "업데이트할 정류장 번호", required = true) @RequestParam(name = "station") Integer station) {
         try {
             Passenger passenger = passengerService.updateStation(deviceId, station);
             return ResponseEntity.status(HttpStatus.OK)
@@ -63,8 +63,8 @@ public class PassengerController {
     @Operation(summary = "승객의 알람 상태 업데이트", description = "특정 승객의 알람 상태를 업데이트합니다.")
     @PatchMapping("/passengers/{deviceId}/alarm")
     public ResponseEntity<String> updateAlarm(
-            @Parameter(description = "승객의 디바이스 ID", required = true) @PathVariable String deviceId,
-            @Parameter(description = "알람 활성화 여부", required = true) @RequestParam boolean alarm) {
+            @Parameter(description = "승객의 디바이스 ID", required = true) @PathVariable(name = "deviceId") String deviceId,
+            @Parameter(description = "알람 활성화 여부", required = true) @RequestParam(name = "alarm") boolean alarm) {
         try {
             Passenger passenger = passengerService.updateAlarm(deviceId, alarm);
             return ResponseEntity.status(HttpStatus.OK)
@@ -79,8 +79,8 @@ public class PassengerController {
     @Operation(summary = "승객의 FCM 토큰 업데이트", description = "특정 승객의 FCM 토큰을 업데이트합니다.")
     @PatchMapping("/passengers/{deviceId}/token")
     public ResponseEntity<String> updateToken(
-            @Parameter(description = "승객의 디바이스 ID", required = true) @PathVariable String deviceId,
-            @Parameter(description = "업데이트할 FCM 토큰", required = true) @RequestParam String fcmtoken) {
+            @Parameter(description = "승객의 디바이스 ID", required = true) @PathVariable(name = "deviceId") String deviceId,
+            @Parameter(description = "업데이트할 FCM 토큰", required = true) @RequestParam(name = "fcmtoken") String fcmtoken) {
         try {
             Passenger passenger = passengerService.updateFCMToken(deviceId, fcmtoken);
             return ResponseEntity.status(HttpStatus.OK)
@@ -94,7 +94,7 @@ public class PassengerController {
     @Operation(summary = "특정 정류장의 승객 조회", description = "특정 정류장에서 알람이 설정된 승객들을 조회합니다.")
     @GetMapping("/passengers/station")
     public ResponseEntity<Object> getPassengersByStationAndAlarm(
-            @Parameter(description = "정류장 번호", required = true) @RequestParam Integer station) {
+            @Parameter(description = "정류장 번호", required = true) @RequestParam(name = "station") Integer station) {
         try {
             List<Passenger> passengers = passengerService.findPassengerByStationAndAlarm(station);
             return ResponseEntity.status(HttpStatus.OK)

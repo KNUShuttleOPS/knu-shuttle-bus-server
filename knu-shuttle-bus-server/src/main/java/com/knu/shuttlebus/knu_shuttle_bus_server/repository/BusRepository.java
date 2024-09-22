@@ -16,8 +16,8 @@ public interface BusRepository extends JpaRepository<Bus, Integer> {
     @Query(value = "SELECT * FROM bus WHERE line = :line And operation_info = true", nativeQuery = true)
     List<Bus> findByLine(String line);
 
-    @Query(value = "SELECT * FROM bus WHERE heading <= :stop And line = :line And operation_info = true", nativeQuery = true)
-    List<Bus> findArrivingAtStop(String line, Integer stop);
+    @Query(value = "SELECT * FROM bus WHERE heading <= :station And line = :line And operation_info = true", nativeQuery = true)
+    List<Bus> findArrivingAtStop(String line, Integer station);
 
     @Query(value = "SELECT * FROM bus WHERE operation_info = true", nativeQuery = true)
     List<Bus> findByOperationInfo();

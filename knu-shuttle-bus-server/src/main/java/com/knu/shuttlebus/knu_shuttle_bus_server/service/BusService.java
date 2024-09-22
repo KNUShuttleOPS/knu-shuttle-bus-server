@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knu.shuttlebus.knu_shuttle_bus_server.domain.Bus;
 import com.knu.shuttlebus.knu_shuttle_bus_server.domain.User;
-import com.knu.shuttlebus.knu_shuttle_bus_server.dto.BusArrivingAtStopRequest;
 import com.knu.shuttlebus.knu_shuttle_bus_server.dto.BusRegistration;
 import com.knu.shuttlebus.knu_shuttle_bus_server.dto.BusUpdateRequest;
 import com.knu.shuttlebus.knu_shuttle_bus_server.repository.BusRepository;
@@ -53,7 +52,7 @@ public class BusService {
     public Bus findBusByDeviceId(String deviceId) {
         User targetUser = userRepository.findByDeviceId(deviceId)
                 .orElseThrow(() -> new IllegalArgumentException("Unknow User"));
-        return busRepository.findById(targetUser.getUserId())
+        return busRepository.findByUserUserId(targetUser.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Unknown Bus"));
     }
 
@@ -61,8 +60,8 @@ public class BusService {
         return busRepository.findByLine(line);
     }
 
-    public List<Bus> findBusesArrivingAtStop(BusArrivingAtStopRequest dto) {
-        return busRepository.findArrivingAtStop(dto.getLine(), dto.getStation());
+    public List<Bus> findBusesArrivingAtStop(String line, Integer station) {
+        return busRepository.findArrivingAtStop(line, station);
     }
 
     public List<Bus> findAllBusList() {

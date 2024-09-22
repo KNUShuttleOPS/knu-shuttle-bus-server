@@ -31,7 +31,7 @@ public class Passenger {
     @ColumnDefault("false")
     private Boolean alarm;
 
-    @Column(name = "fcmtoken", nullable = false)
+    @Column(name = "fcmtoken")
     private String fcmToken;
 
     @OneToOne(cascade = CascadeType.REMOVE)

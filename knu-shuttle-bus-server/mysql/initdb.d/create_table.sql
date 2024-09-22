@@ -22,7 +22,7 @@ CREATE TABLE passenger (
     student_id VARCHAR(10) NOT NULL UNIQUE,
     station INT,
     alarm BOOLEAN,
-    fcmtoken VARCHAR(255) NOT NULL,
+    fcmtoken VARCHAR(255),
     CONSTRAINT fk_passenger_user FOREIGN KEY (user_id) REFERENCES user(user_id),
     INDEX (station),
     INDEX (student_id)
